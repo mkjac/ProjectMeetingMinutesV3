@@ -1,0 +1,52 @@
+html {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-image: url("../static/images/background.jpg");
+    background-size: 100% fit-content;
+    background-position: center;
+    font-family: 'Raleway', sans-serif;
+}
+
+header,
+footer {
+    height: 50px;
+}
+
+#content {
+    min-height: calc(100vh - 50px - 50px);
+    text-align: center;
+}
+
+input {
+    text-align: center;
+    border-radius: 15px;
+}
+
+button {
+    background-color: rgba(0, 73, 141, 0.5);
+    color: white;
+    border: none;
+    padding: 5px;
+    height: 40px;
+    width: 100px;
+    border-radius: 15px;
+}
+
+a {
+    color: white;
+    text-decoration: none;
+}
+
+a:hover {
+    color: white;
+    text-decoration: none;
+}
+
+#newMinute {
+    display: flex;
+    margin-left: auto;
+}

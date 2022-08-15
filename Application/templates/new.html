@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block style %}
+<link rel="stylesheet" href="../static/new.css">
+{% endblock %}
+
+{% block script %}
+<script>
+    var actionCount = 1;
+
+    function NewAction() {
+        var newAction = document.getElementById("action0");
+        var clone = newAction.cloneNode(true);
+        clone.id = "action" + actionCount;
+        actionCount += 1;
+
+        var actions = document.getElementById("actions");
+        actions.append(clone);
+    }
+</script>
+{% endblock %}
+
+{% block content %}
+<button class="mx-auto" style="width: 200px" type="button"><a href="{{ url_for('home') }}">View all minutes</a></button>
+
+<form class="mx-auto" action="{{ url_for('new') }}" method="POST" enctype="multipart/form-data">
+    <div id="row">
+        <div id="dateAndTime">
+            <h4>Date and Time</h4>
+            {{ newForm.date(class_="form-control") }}
+            {{ newForm.time(class_="form-control") }}
+        </div>
+        <div id="fields">
+            <div id="field">
+                <h4>Attendees</h4>
+                {{ newForm.attendees(class_="form-control", placeholder="Attendees") }}
+            </div>
+            <div id="field">
+                <h4>Absentees</h4>
+                {{ newForm.absentees(class_="form-control", placeholder="Absentees") }}
+            </div>
+            <div id="field">
+                <h4>Agenda</h4>
+                {{ newForm.agenda(class_="form-control", placeholder="Agenda") }}
+            </div>
+            <div id="field">
+                <h4>Extra Information</h4>
+                {{ newForm.extraInfo(class_="form-control", placeholder="Extra Information") }}
+            </div>
+            <div id="field">
+                <h4>Attach Files</h4>
+                {{ newForm.files(class_="form-control", placeholder="Upload Files") }}
+            </div>
+        </div>
+        <div id="actions">
+            <h4>Actions</h4>
+            <button type="button" onclick="NewAction()">New Action</button>
+            <div class="action" id="action0">
+                {{ actionsForm.action(class_="form-control", placeholder="Action") }}
+                {{ actionsForm.actionedBy(class_="form-control", placeholder="Actioned By") }}
+            </div>
+        </div>
+    </div>
+    <br>
+    <div id="button">
+        {{ newForm.add_minutes_button }}
+        {{ newForm.csrf_token }}
+    </div>
+    <ul>
+        {% for error in newForm.errors %}
+        <li>{{ error }}</li>
+        {% endfor %}
+    </ul>
+</form>
+
+{% endblock %}

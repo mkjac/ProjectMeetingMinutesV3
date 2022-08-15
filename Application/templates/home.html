@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+
+{% block style %}
+<link rel="stylesheet" href="../static/home.css">
+{% endblock %}
+{% block content %}
+<p>{{ get_flashed_messages()[get_flashed_messages()|count - 1] }}</p><br>
+
+<p>Welcome back {{ currentUser.username }}</p>
+
+<button class="mx-auto" style="width: 180px" type="button"><a href="{{ url_for('new') }}">Create new minute</a></button>
+<br>
+
+<h2>Minutes:</h2><br>
+{% if minutesList.all()|count == 0 %}
+<p>No minutes to display</p>
+{% endif %}
+{% for min in minutesList %}
+<div id="minute">
+    <div id="fields">
+        <table class="table" style="color: white">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Meeting ID</th>
+                    <th scope="col">User ID</th>
+                    <th scope="col">Date and Time</th>
+                    <th scope="col">Attendees</th>
+                    <th scope="col">Absentees</th>
+                    <th scope="col">Agenda</th>
+                    <th scope="col">Extra Information</th>
+                    <th scope="col">Files</th>
+                    <th scope="col">Actions</th>
+                    <th scope="col">Delete Minute</th>
+                    <th scope="col">Modify Minute</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row"></th>
+                    <td>{{ min.meetingid }}</td>
+                    <td id="userid_data">{{ min.userid }}</td>
+                    <td>{{ min.datetime }}</td>
+                    <td>{{ min.attendees }}</td>
+                    <td>{{ min.absentees }}</td>
+                    <td>{{ min.agenda }}</td>
+                    <td>{{ min.extrainfo }}</td>
+                    <td>
+                        {% for i in range(filesList|count) %}
+                        {% if filesList[i].meetingid == min.meetingid %}
+                        <a href="{{ url_for('downloadfile', fileid=filesList[i].fileid) }}">Download {{
+                            filesList[i].filename }}</a>
+                        {% endif %}
+                        {% endfor %}
+                    </td>
+                    <td>
+                        <div id="actions">
+                            <ul class="list-group">
+                                {% for i in range(actionsList|count) %}
+                                {% if actionsList[i].meetingid == min.meetingid %}
+                                <li class="list-group-item">Action: {{ actionsList[i].action }}, Actioned By: {{
+                                    actionsList[i].actionedby }}
+                                </li>
+                                {% endif %}
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </td>
+                    <td><button type="button"><a style="font-size: 12px"
+                                href="{{ url_for('delete', meetingid=min.meetingid) }}">Delete
+                                Minute</a></button>
+                    </td>
+                    <td><button type="button"><a style="font-size: 12px"
+                                href="{{ url_for('modify', meetingid=min.meetingid) }}">Modify
+                                Minute</a></button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endfor %}
+{% endblock %}

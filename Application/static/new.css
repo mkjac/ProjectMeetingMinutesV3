@@ -1,0 +1,21 @@
+form {
+    width: 75%;
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+h4 {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.action {
+    display: flex;
+}
+
+#dateAndTime {
+    width: 42%;
+    margin: auto;
+}
